@@ -1,19 +1,32 @@
 [
   {
-    "name": "Schedule Morning Summary",
+    "name": "Schedule Morning Summary shows current config and prompt",
     "steps": [
       {
+        "send": { "callback": "summary:schedule" },
         "expect": [
           {
-            "method": "sendMessage",
+            "method": "editMessageText",
             "payload": {
-              "text": "Enable and set the time for a daily morning summary of prices and alerts"
+              "text": "Morning summary is not scheduled.\n\nEnter the time for your daily summary (HH:MM, 24h format, e.g. 08:00):"
             }
           }
-        ],
-        "send": {
-          "callback": "summary:schedule"
-        }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Schedule Morning Summary full flow",
+    "steps": [
+      {
+        "send": { "text": "/start" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "👋 Welcome! Tap a button below to get started." } }
+        ]
+      },
+      {
+        "send": { "callback": "summary:schedule" },
+        "expect": [{ "method": "editMessageText" }]
       }
     ]
   }

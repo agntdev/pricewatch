@@ -1,19 +1,39 @@
 [
   {
-    "name": "/admin",
+    "name": "/admin shows the admin dashboard",
     "steps": [
       {
+        "send": { "text": "/admin" },
         "expect": [
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Owner-only command to view total users, active watchlists, and top 10 alerting tickers"
+              "text": "📊 Admin Dashboard\n\nWatchlist tickers: 0\nTotal alerts: 0 (0 active)\n\nNo alert data yet."
             }
           }
-        ],
-        "send": {
-          "text": "/admin"
-        }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "/admin shows metrics after onboarding",
+    "steps": [
+      {
+        "send": { "text": "/start" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "👋 Welcome! Tap a button below to get started." } }
+        ]
+      },
+      {
+        "send": { "text": "/admin" },
+        "expect": [
+          {
+            "method": "sendMessage",
+            "payload": {
+              "text": "📊 Admin Dashboard\n\nWatchlist tickers: 3\nTotal alerts: 1 (1 active)\n\nTop tickers by alert count:\n  ETH: 1"
+            }
+          }
+        ]
       }
     ]
   }

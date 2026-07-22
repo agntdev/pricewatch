@@ -1,19 +1,61 @@
 [
   {
-    "name": "/price",
+    "name": "/price with no watchlist shows empty state",
     "steps": [
       {
+        "send": { "text": "/price" },
         "expect": [
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Query current price(s) for a specific ticker or all watchlist items"
+              "text": "Your watchlist is empty — add some tickers first to check prices."
             }
           }
-        ],
-        "send": {
-          "text": "/price"
-        }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "/price all watchlist items returns a response",
+    "steps": [
+      {
+        "send": { "text": "/start" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "👋 Welcome! Tap a button below to get started." } }
+        ]
+      },
+      {
+        "send": { "text": "/price" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "/price BTC returns a response",
+    "steps": [
+      {
+        "send": { "text": "/price BTC" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "/price XYZ shows unknown ticker error",
+    "steps": [
+      {
+        "send": { "text": "/price XYZ" },
+        "expect": [
+          {
+            "method": "sendMessage",
+            "payload": {
+              "text": "Couldn't find a price for \"XYZ\". Check the ticker symbol and try again.\n\nSome supported tickers: BTC, ETH, TON, SOL, XRP, ADA, DOGE, DOT, AVAX, LINK"
+            }
+          }
+        ]
       }
     ]
   }
