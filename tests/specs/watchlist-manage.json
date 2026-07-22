@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Manage Watchlist",
+    "steps": [
+      {
+        "expect": [
+          {
+            "method": "sendMessage",
+            "payload": {
+              "text": "Open watchlist management menu with Add, Remove, and View options"
+            }
+          }
+        ],
+        "send": {
+          "callback": "watchlist:manage"
+        }
+      }
+    ]
+  }
+]
