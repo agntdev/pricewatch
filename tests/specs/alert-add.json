@@ -1,19 +1,63 @@
 [
   {
-    "name": "Add Alert",
+    "name": "Add Alert shows empty watchlist warning",
     "steps": [
       {
+        "send": { "callback": "alert:add" },
         "expect": [
           {
-            "method": "sendMessage",
+            "method": "editMessageText",
             "payload": {
-              "text": "Start the alert creation flow for a selected ticker"
+              "text": "Add a ticker to your watchlist first — you can't set alerts without one."
             }
           }
-        ],
-        "send": {
-          "callback": "alert:add"
-        }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Add Alert full flow after onboarding",
+    "steps": [
+      {
+        "send": { "text": "/start" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "👋 Welcome! Tap a button below to get started." } }
+        ]
+      },
+      {
+        "send": { "callback": "alert:add" },
+        "expect": [{ "method": "editMessageText", "payload": { "text": "Which ticker do you want to set an alert for?" } }]
+      },
+      {
+        "send": { "callback": "al:add:ticker:BTC" },
+        "expect": [{ "method": "editMessageText", "payload": { "text": "What kind of alert for BTC?" } }]
+      },
+      {
+        "send": { "callback": "al:add:type:threshold" },
+        "expect": [{ "method": "editMessageText", "payload": { "text": "Enter the price threshold (e.g. 50000):" } }]
+      }
+    ]
+  },
+  {
+    "name": "Add Alert percent change flow",
+    "steps": [
+      {
+        "send": { "text": "/start" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "👋 Welcome! Tap a button below to get started." } }
+        ]
+      },
+      {
+        "send": { "callback": "alert:add" },
+        "expect": [{ "method": "editMessageText" }]
+      },
+      {
+        "send": { "callback": "al:add:ticker:ETH" },
+        "expect": [{ "method": "editMessageText" }]
+      },
+      {
+        "send": { "callback": "al:add:type:percent" },
+        "expect": [{ "method": "editMessageText", "payload": { "text": "Enter the percent threshold (e.g. 5):" } }]
       }
     ]
   }

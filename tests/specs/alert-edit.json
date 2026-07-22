@@ -1,19 +1,55 @@
 [
   {
-    "name": "Edit Alerts",
+    "name": "Edit Alerts shows empty state for new user",
     "steps": [
       {
+        "send": { "callback": "alert:edit" },
         "expect": [
           {
-            "method": "sendMessage",
+            "method": "editMessageText",
             "payload": {
-              "text": "View and modify existing alert rules with inline edit/remove buttons"
+              "text": "No alerts set up yet — tap ➕ Add Alert from the menu to create one."
             }
           }
-        ],
-        "send": {
-          "callback": "alert:edit"
-        }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Edit Alerts shows list after onboarding",
+    "steps": [
+      {
+        "send": { "text": "/start" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "👋 Welcome! Tap a button below to get started." } }
+        ]
+      },
+      {
+        "send": { "callback": "alert:edit" },
+        "expect": [{ "method": "editMessageText" }]
+      }
+    ]
+  },
+  {
+    "name": "Edit Alerts toggle enable/disable",
+    "steps": [
+      {
+        "send": { "text": "/start" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "👋 Welcome! Tap a button below to get started." } }
+        ]
+      },
+      {
+        "send": { "callback": "alert:edit" },
+        "expect": [{ "method": "editMessageText" }]
+      },
+      {
+        "send": { "callback": "al:edit:pick:sample_pct_eth" },
+        "expect": [{ "method": "editMessageText" }]
+      },
+      {
+        "send": { "callback": "al:edit:toggle:sample_pct_eth" },
+        "expect": [{ "method": "editMessageText" }]
       }
     ]
   }

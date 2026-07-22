@@ -1,19 +1,82 @@
 [
   {
-    "name": "Manage Watchlist",
+    "name": "Manage Watchlist shows empty state for new user",
     "steps": [
       {
+        "send": { "callback": "watchlist:manage" },
         "expect": [
           {
-            "method": "sendMessage",
+            "method": "editMessageText",
             "payload": {
-              "text": "Open watchlist management menu with Add, Remove, and View options"
+              "text": "Your watchlist is empty — tap Add to get started."
             }
           }
-        ],
-        "send": {
-          "callback": "watchlist:manage"
-        }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Watchlist add flow with ticker input",
+    "steps": [
+      {
+        "send": { "text": "/start" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "👋 Welcome! Tap a button below to get started." } }
+        ]
+      },
+      {
+        "send": { "callback": "watchlist:manage" },
+        "expect": [{ "method": "editMessageText" }]
+      },
+      {
+        "send": { "callback": "wl:add:start" },
+        "expect": [{ "method": "editMessageText", "payload": { "text": "Which ticker do you want to add? (e.g. BTC, SOL, DOGE)" } }]
+      }
+    ]
+  },
+  {
+    "name": "Watchlist remove flow with confirmation",
+    "steps": [
+      {
+        "send": { "text": "/start" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "👋 Welcome! Tap a button below to get started." } }
+        ]
+      },
+      {
+        "send": { "callback": "watchlist:manage" },
+        "expect": [{ "method": "editMessageText" }]
+      },
+      {
+        "send": { "callback": "wl:remove:pick" },
+        "expect": [{ "method": "editMessageText", "payload": { "text": "Tap a ticker to remove it:" } }]
+      },
+      {
+        "send": { "callback": "wl:remove:BTC" },
+        "expect": [{ "method": "editMessageText", "payload": { "text": "Remove BTC from your watchlist?" } }]
+      },
+      {
+        "send": { "callback": "wl:remove:confirm:BTC" },
+        "expect": [{ "method": "editMessageText" }]
+      }
+    ]
+  },
+  {
+    "name": "Watchlist view item detail",
+    "steps": [
+      {
+        "send": { "text": "/start" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "👋 Welcome! Tap a button below to get started." } }
+        ]
+      },
+      {
+        "send": { "callback": "watchlist:manage" },
+        "expect": [{ "method": "editMessageText" }]
+      },
+      {
+        "send": { "callback": "wl:view:ETH" },
+        "expect": [{ "method": "editMessageText", "payload": { "text": "ETH — Ethereum" } }]
       }
     ]
   }

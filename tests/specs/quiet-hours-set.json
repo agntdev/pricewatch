@@ -1,19 +1,32 @@
 [
   {
-    "name": "Set Quiet Hours",
+    "name": "Set Quiet Hours shows current config and prompt",
     "steps": [
       {
+        "send": { "callback": "quiet_hours:set" },
         "expect": [
           {
-            "method": "sendMessage",
+            "method": "editMessageText",
             "payload": {
-              "text": "Configure quiet hours to suppress alerts during specified time periods"
+              "text": "Quiet hours are not set.\n\nEnter the start time for quiet hours (HH:MM, 24h format, e.g. 22:00):"
             }
           }
-        ],
-        "send": {
-          "callback": "quiet_hours:set"
-        }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Set Quiet Hours full flow",
+    "steps": [
+      {
+        "send": { "text": "/start" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "👋 Welcome! Tap a button below to get started." } }
+        ]
+      },
+      {
+        "send": { "callback": "quiet_hours:set" },
+        "expect": [{ "method": "editMessageText" }]
       }
     ]
   }

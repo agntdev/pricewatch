@@ -1,6 +1,6 @@
 [
   {
-    "name": "/start replies with the welcome + main menu",
+    "name": "/start initializes defaults and shows main menu",
     "steps": [
       {
         "send": { "text": "/start" },
@@ -10,6 +10,28 @@
             "payload": { "text": "👋 Welcome! Tap a button below to get started." }
           }
         ]
+      }
+    ]
+  },
+  {
+    "name": "back to menu from any view",
+    "steps": [
+      {
+        "send": { "text": "/start" },
+        "expect": [
+          {
+            "method": "sendMessage",
+            "payload": { "text": "👋 Welcome! Tap a button below to get started." }
+          }
+        ]
+      },
+      {
+        "send": { "callback": "menu:help" },
+        "expect": [{ "method": "editMessageText" }]
+      },
+      {
+        "send": { "callback": "menu:main" },
+        "expect": [{ "method": "editMessageText", "payload": { "text": "👋 Welcome! Tap a button below to get started." } }]
       }
     ]
   }
