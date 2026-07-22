@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Edit Alerts",
+    "steps": [
+      {
+        "expect": [
+          {
+            "method": "sendMessage",
+            "payload": {
+              "text": "View and modify existing alert rules with inline edit/remove buttons"
+            }
+          }
+        ],
+        "send": {
+          "callback": "alert:edit"
+        }
+      }
+    ]
+  }
+]
